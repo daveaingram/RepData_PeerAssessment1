@@ -47,7 +47,8 @@ The same process is taken to simply remove the empty values at this point.
 ```{r meanPerInterval, echo=TRUE}
 stepsPerInterval <- tapply(data$steps, data$interval, mean, na.rm=TRUE)
 maxInterval <- names(which.max(stepsPerInterval))
-plot(stepsPerInterval, type="l", main="Average Steps Per Interval",
+plot(levels(data$interval), stepsPerInterval, type="l", 
+     main="Average Steps Per Interval",
      ylab="Average number of Steps", xlab="Interval")
 ```
 
@@ -131,7 +132,7 @@ library(ggplot2)
 byDayInterval <- ddply(imputedData, c("interval", "day"), 
                        function(x) mean(x$steps))
 
-qplot(as.integer(interval), V1, data=byDayInterval, geom=c("line"), 
+qplot(as.integer(as.character(interval)), V1, data=byDayInterval, geom=c("line"), 
       facets=day~., xlab="Interval", ylab="Average Steps Per Interval", 
       main="Steps Per Interval by Day")
 ```
